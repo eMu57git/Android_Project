@@ -1,0 +1,19 @@
+package com.example.abusmzakaria.employeeapp;
+
+
+
+public class CalcBaseSalary {
+    private double baseSalary;
+
+    public CalcBaseSalary(double baseSalary) {
+        this.baseSalary = baseSalary;
+    }
+
+    public double getBaseSalary() {
+        return baseSalary;
+    }
+
+    public double totalSalary() {
+        return baseSalary;
+    }
+}

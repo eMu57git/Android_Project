@@ -1,0 +1,48 @@
+package com.example.abusmzakaria.employeeapp;
+
+import java.io.Serializable;
+
+
+
+public class JobInfo implements Serializable {
+
+    private String startTimeHour;
+    private String startTimeMinute;
+    private String endTimeHour;
+    private String endTimeMinute;
+    private int jobType;
+    private Address address;
+
+    public JobInfo(String startTimeHour, String startTimeMinute, String endTimeHour, String endTimeMinute, int jobType, Address address) {
+        this.startTimeHour = startTimeHour;
+        this.startTimeMinute = startTimeMinute;
+        this.endTimeHour = endTimeHour;
+        this.endTimeMinute = endTimeMinute;
+        this.jobType = jobType;
+        this.address = address;
+    }
+
+    public String getStartTimeHour() {
+        return startTimeHour;
+    }
+
+    public String getStartTimeMinute() {
+        return startTimeMinute;
+    }
+
+    public String getEndTimeHour() {
+        return endTimeHour;
+    }
+
+    public String getEndTimeMinute() {
+        return endTimeMinute;
+    }
+
+    public int getJobType() {
+        return jobType;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+}

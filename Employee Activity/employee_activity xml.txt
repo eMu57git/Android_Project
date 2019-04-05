@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.abusmzakaria.employeeapp.EmployeeListsActivity">
+    <TextView
+        android:id="@+id/noRecordsTv"
+        android:text="@string/no_records"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <ListView
+        android:id="@+id/employeeLv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:onClick="addNewEmp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/plus_sign"
+        android:textSize="40sp"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:background="@drawable/round_corner"
+        />
+
+</RelativeLayout>

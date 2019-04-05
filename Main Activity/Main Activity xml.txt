@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.abusmzakaria.employeeapp.MainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:gravity="center"
+        android:text="@string/reg_title"
+        android:textColor="#fff"
+        android:background="#6e4553"
+        style="@style/Base.TextAppearance.AppCompat.Large"
+        android:textStyle="bold"/>
+
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="30dp"
+        android:orientation="vertical">
+
+        <TextView
+            style="@android:style/TextAppearance.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/basic_title" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="15dp"
+            android:background="#ccc" />
+
+        <EditText
+            android:id="@+id/nameEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name" />
+
+        <EditText
+            android:id="@+id/phoneEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/phone"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/emailEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
+        <EditText
+            android:id="@+id/websiteEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/website"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TableRow>
+
+                <TextView
+                    style="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/gender_c" />
+
+
+                <Button
+                    android:id="@+id/genderBtn"
+                    android:onClick="chooseGender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/male"
+                    android:textAllCaps="false" />
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/birthday_c" />
+
+            <Button
+                android:id="@+id/birthdayBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/select"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/skills_c" />
+
+            <TableLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3">
+
+                <TableRow>
+
+                    <CheckBox
+                        android:id="@+id/phpCb"
+                        android:layout_weight="1"
+                        android:onClick="checkSkill"
+                        android:text="@string/php" />
+
+                    <CheckBox
+                        android:id="@+id/cppCb"
+                        android:layout_weight="1"
+                        android:onClick="checkSkill"
+                        android:text="@string/cpp" />
+
+                    <CheckBox
+                        android:id="@+id/pythonCb"
+                        android:layout_weight="1"
+                        android:onClick="checkSkill"
+                        android:text="@string/python" />
+                </TableRow>
+
+                <TableRow>
+
+                    <CheckBox
+                        android:id="@+id/javaCb"
+                        android:layout_weight="1"
+                        android:onClick="checkSkill"
+                        android:text="@string/java" />
+
+                    <CheckBox
+                        android:id="@+id/kotlinCb"
+                        android:layout_weight="1"
+                        android:onClick="checkSkill"
+                        android:text="@string/kotlin" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/nextBtn"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="#7dd483"
+            android:text="@string/next"
+            android:textAllCaps="false"
+            android:textColor="#000"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

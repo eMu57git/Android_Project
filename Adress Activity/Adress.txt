@@ -1,0 +1,61 @@
+package com.example.emu.employeeapp;
+
+import java.io.Serializable;
+
+public class Address implements Serializable {
+    private String house;
+    private String road;
+    private String postOffice;
+    private String postCode;
+    private String district;
+    private BasicInfo basicInfo;
+
+    public Address(String house, String road, String postOffice, String postCode, String district, BasicInfo basicInfo) {
+        this.house = house;
+        this.road = road;
+        this.postOffice = postOffice;
+        this.postCode = postCode;
+        this.district = district;
+        this.basicInfo = basicInfo;
+    }
+
+    public String getHouse() {
+        return house;
+    }
+
+    public String getRoad() {
+        return road;
+    }
+
+    public String getPostOffice() {
+        return postOffice;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public BasicInfo getBasicInfo() {
+        return basicInfo;
+    }
+}
+obInfo = (JobInfo) prevIntent.getSerializableExtra("job_info");
+                  Intent intent = new Intent(HourlyActivity.this, OutputActivity.class);
+                  EmployeeFullDetails employeeFullDetails = new EmployeeFullDetails(0.0,totalHour,
+                          hourlyRate,"","",jobInfo);
+                  intent.putExtra("emp_full_details",employeeFullDetails);
+                  startActivity(intent);
+              }
+
+            }
+        });
+    }
+
+    public void back(View view) {
+        finish();
+    }
+}

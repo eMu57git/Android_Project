@@ -1,0 +1,25 @@
+package com.example.abusmzakaria.employeeapp;
+
+
+public class CalcHourlyCommissioned extends CalcHourlySalary {
+    private double commissionRate;
+    private double grossSale;
+
+    public CalcHourlyCommissioned(double totalHour, double hourRate, double commissionRate, double grossSale) {
+        super(totalHour, hourRate);
+        this.commissionRate = commissionRate;
+        this.grossSale = grossSale;
+    }
+
+    public double getCommissionRate() {
+        return commissionRate;
+    }
+
+    public double getGrossSale() {
+        return grossSale;
+    }
+
+    public double totalSalary() {
+        return (getTotalHour() * getHourRate()) + (grossSale * commissionRate * 0.01);
+    }
+}

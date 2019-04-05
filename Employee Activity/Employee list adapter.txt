@@ -1,0 +1,18 @@
+package com.example.abusmzakaria.employeeapp;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.widget.ArrayAdapter;
+
+import java.util.List;
+
+
+public class EmployeeListAdapter extends ArrayAdapter<EmployeeFullDetails> {
+    private List<EmployeeFullDetails> allEmployeeDetails;
+    Context context;
+    public EmployeeListAdapter(@NonNull Context context, List<EmployeeFullDetails> allEmployeeDetails) {
+        super(context, R.layout.all_emp_row, allEmployeeDetails);
+        this.allEmployeeDetails = allEmployeeDetails;
+        this.context = context;
+    }
+}

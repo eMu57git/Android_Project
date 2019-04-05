@@ -1,0 +1,50 @@
+package com.example.abusmzakaria.employeeapp;
+
+import java.io.Serializable;
+
+/**
+ * Created by abusmzakaria on 4/7/2018.
+ */
+
+public class EmployeeFullDetails implements Serializable {
+    private double baseSalary;
+    private String totalHour;
+    private String hourlyRate;
+    private String commissionRate;
+    private String grossSale;
+    private JobInfo jobInfo;
+
+    public EmployeeFullDetails(double baseSalary, String totalHour, String hourlyRate,
+                               String commissionRate, String grossSale, JobInfo jobInfo) {
+        this.baseSalary = baseSalary;
+        this.totalHour = totalHour;
+        this.hourlyRate = hourlyRate;
+        this.commissionRate = commissionRate;
+        this.grossSale = grossSale;
+        this.jobInfo = jobInfo;
+    }
+
+    public double getBaseSalary() {
+        return baseSalary;
+    }
+
+    public String getTotalHour() {
+        return totalHour;
+    }
+
+    public String getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public String getCommissionRate() {
+        return commissionRate;
+    }
+
+    public String getGrossSale() {
+        return grossSale;
+    }
+
+    public JobInfo getJobInfo() {
+        return jobInfo;
+    }
+}

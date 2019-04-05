@@ -1,0 +1,26 @@
+package com.example.abusmzakaria.employeeapp;
+
+public class CalcCommissionedSalary extends CalcBaseSalary {
+
+    private double commissionRate;
+    private double grossSale;
+
+    public double getCommissionRate() {
+        return commissionRate;
+    }
+
+    public double getGrossSale() {
+        return grossSale;
+    }
+
+    public CalcCommissionedSalary(double baseSalary, double commissionRate, double grossSale) {
+        super(baseSalary);
+        this.commissionRate = commissionRate;
+        this.grossSale = grossSale;
+    }
+
+    public double totalSalary() {
+
+        return (grossSale * commissionRate * 0.01) + getBaseSalary();
+    }
+}

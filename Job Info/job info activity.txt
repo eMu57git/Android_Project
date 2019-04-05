@@ -1,0 +1,117 @@
+package com.example.abusmzakaria.employeeapp;
+
+import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+import java.util.Calendar;
+
+public class JobInfoActivity extends AppCompatActivity {
+
+    private Button nextBtn;
+    private int jobType=0;
+    private Intent intent;
+    private String startTimeHour;
+    private String endTimeHour;
+    private String startTimeMinute;
+    private String endTimeMinute;
+    private Button startTimeBtn;
+    private Button endTimeBtn;
+    private JobInfo jobInfo;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_job_info);
+        nextBtn = findViewById(R.id.nextBtn);
+        startTimeBtn = findViewById(R.id.startTimeBtn);
+        endTimeBtn = findViewById(R.id.endTimeBtn);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(jobType==0)
+                {
+                    Toast.makeText(JobInfoActivity.this, getText(R.string.select_salary), Toast.LENGTH_SHORT).show();
+                }else if(startTimeHour.equals(endTimeHour) && startTimeMinute.equals(endTimeMinute)) {
+                    Toast.makeText(JobInfoActivity.this, R.string.choose_start_end_time, Toast.LENGTH_SHORT).show();
+                }else{
+                        Intent prevIntent = getIntent();
+                        if(jobType==1)
+                        {
+                            intent = new Intent(JobInfoActivity.this,BaseActivity.class);
+                        }else if(jobType==2){
+                            intent = new Intent(JobInfoActivity.this,HourlyActivity.class);
+                        }else if(jobType==3){
+                            intent = new Intent(JobInfoActivity.this,CommissionedActivity.class);
+                        }else{
+                            intent = new Intent(JobInfoActivity.this,HourlyCommissionedActivity.class);
+                        }
+                    Address address = (Address) prevIntent.getSerializableExtra("address_activity");
+                    JobInfo jobInfo = new JobInfo(startTimeHour,startTimeMinute,endTimeHour,endTimeMinute,jobType,address);
+                    intent.putExtra("job_info",jobInfo);
+                        startActivity(intent);
+                    }
+            }
+        });
+    }
+    public void back(View view) {
+        finish();
+    }
+
+    public void chooseSalary(View view) {
+        RadioButton rb = (RadioButton) view;
+        if(rb.getText().toString().equals(getText(R.string.base_salary))){
+            jobType = 1;
+        }else if(rb.getText().toString().equals(getText(R.string.hourly_salary))){
+            jobType = 2;
+        }else if(rb.getText().toString().equals(getText(R.string.commissioned_salary))){
+            jobType = 3;
+        }else if(rb.getText().toString().equals(getText(R.string.hourly_p_commissioned))){
+            jobType = 4;
+        }else{
+            jobType = 0;
+        }
+    }
+
+    public void selectTime(final View view) {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                JobInfoActivity.this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+
+                        String amPm = "AM";
+                        if(i>11) amPm = "PM";
+                        int hour = i;
+                        if(i>12) hour = i - 12;
+                        if(i==0) hour = 12;
+                        String timeShow = EmployeeUtils.doubleIntVal(String.valueOf(hour)) + ":" + EmployeeUtils.doubleIntVal(String.valueOf(i1)) + " " + amPm;
+                        if(view.getId()==R.id.startTimeBtn){
+                            startTimeHour = String.valueOf(i);
+                            startTimeMinute = String.valueOf(i1);
+                            startTimeBtn.setText(timeShow);
+                            if(!endTimeBtn.getText().toString().equals(R.string.select)){
+                                if(startTimeHour.equals(endTimeHour) && startTimeMinute.equals(endTimeMinute))
+                                    Toast.makeText(JobInfoActivity.this, getText(R.string.can_not_same).toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else  if(view.getId()==R.id.endTimeBtn){
+                            endTimeHour = String.valueOf(i);
+                            endTimeMinute = String.valueOf(i1);
+                                if(startTimeHour.equals(endTimeHour) && startTimeMinute.equals(endTimeMinute))
+                                    Toast.makeText(JobInfoActivity.this, getText(R.string.can_not_same).toString(), Toast.LENGTH_SHORT).show();
+                            endTimeBtn.setText(timeShow);
+                        }
+                    }
+                },
+                0,
+                0, false
+        );
+        timePickerDialog.show();
+    }
+}

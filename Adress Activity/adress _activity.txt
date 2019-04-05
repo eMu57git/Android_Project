@@ -1,0 +1,166 @@
+package com.example.emu.employeeapp;
+
+import android.content.Intent;
+import android.database.DataSetObserver;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class AddressActivity extends AppCompatActivity {
+private EditText houseEt;
+private EditText roadEt;
+private EditText postOfficeEt;
+private EditText postCodeEt;
+private Spinner districtSp;
+private Button nextBtn;
+private TextView nameTv;
+private String district;
+private BasicInfo basicInfo;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_address);
+        houseEt = findViewById(R.id.houseEt);
+        nameTv = findViewById(R.id.nameTv);
+        roadEt = findViewById(R.id.roadEt);
+        postOfficeEt = findViewById(R.id.postOfficeEt);
+        postCodeEt = findViewById(R.id.postCodeEt);
+        districtSp = findViewById(R.id.districtSp);
+        nextBtn = findViewById(R.id.nextBtn);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(AddressActivity.this,
+                R.layout.custom_spinner,
+                R.id.customSpinner,
+                getDistricts()
+                );
+        districtSp.setAdapter(arrayAdapter);
+        districtSp.setSelection(getDistricts().indexOf("Dhaka"));
+        Intent basicIntent = getIntent();
+        basicInfo = (BasicInfo) basicIntent.getSerializableExtra("basicInfo");
+        try {
+            nameTv.setText(basicInfo.getName());
+        }catch (NullPointerException e)
+        {
+            Toast.makeText(this, getText(R.string.some_wrong), Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               String house = houseEt.getText().toString();
+               String road = roadEt.getText().toString();
+               String postOffice = postOfficeEt.getText().toString();
+               String postCode = postCodeEt.getText().toString();
+               if(house.isEmpty())
+               {
+                   houseEt.setError(getText(R.string.can_not_empty));
+               }else if(road.isEmpty()){
+                   roadEt.setError(getText(R.string.can_not_empty));
+               }else if(postOffice.isEmpty()){
+                   postOfficeEt.setError(getText(R.string.can_not_empty));
+               }else if(postCode.isEmpty()){
+                   postCodeEt.setError(getText(R.string.can_not_empty));
+               }else{
+                   Address address = new Address(house,road, postOffice, postCode,district,basicInfo);
+                   Intent intent = new Intent(AddressActivity.this,JobInfoActivity.class);
+                   intent.putExtra("address_activity",address);
+                   startActivity(intent);
+               }
+            }
+        });
+        districtSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                district = adapterView.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(AddressActivity.this, getText(R.string.can_not_empty), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void back(View view) {
+        finish();
+    }
+    public List<String> getDistricts(){
+        List<String> districts = new ArrayList<>();
+        districts.add("Barguna");
+        districts.add("Barishal");
+        districts.add("Bhola");
+        districts.add("Jhalokati");
+        districts.add("Patuakhali");
+        districts.add("Pirojpur");
+        districts.add("Bandarban");
+        districts.add("Brahmanbaria");
+        districts.add("Chandpur");
+        districts.add("Chattogram");
+        districts.add("Cumilla");
+        districts.add("Cox's Bazar");
+        districts.add("Feni");
+        districts.add("Khagrachhari");
+        districts.add("Lakshmipur");
+        districts.add("Noakhali");
+        districts.add("Rangamati");
+        districts.add("Dhaka");
+        districts.add("Faridpur");
+        districts.add("Gazipur");
+        districts.add("Gopalganj");
+        districts.add("Kishoreganj");
+        districts.add("Madaripur");
+        districts.add("Manikganj");
+        districts.add("Munshiganj");
+        districts.add("Narayanganj");
+        districts.add("Narsingdi");
+        districts.add("Rajbari");
+        districts.add("Shariatpur");
+        districts.add("Tangail");
+        districts.add("Bagerhat");
+        districts.add("Chuadanga");
+        districts.add("Jashore");
+        districts.add("Jhenaidah");
+        districts.add("Khulna");
+        districts.add("Kushtia");
+        districts.add("Magura");
+        districts.add("Meherpur");
+        districts.add("Narail");
+        districts.add("Satkhira");
+        districts.add("Jamalpur");
+        districts.add("Mymensingh");
+        districts.add("Netrokona");
+        districts.add("Sherpur");
+        districts.add("Bogura");
+        districts.add("Joypurhat");
+        districts.add("Naogaon");
+        districts.add("Natore");
+        districts.add("Chapai Nawabganj");
+        districts.add("Pabna");
+        districts.add("Rajshahi");
+        districts.add("Sirajganj");
+        districts.add("Dinajpur");
+        districts.add("Gaibandha");
+        districts.add("Kurigram");
+        districts.add("Lalmonirhat");
+        districts.add("Nilphamari");
+        districts.add("Panchagarh");
+        districts.add("Rangpur");
+        districts.add("Thakurgaon");
+        districts.add("Habiganj");
+        districts.add("Moulvibazar");
+        districts.add("Sunamganj");
+        districts.add("Sylhet");
+        return  districts;
+    }
+}

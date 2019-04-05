@@ -1,0 +1,160 @@
+package com.example.abusmzakaria.employeeapp;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+
+import static java.net.Proxy.Type.HTTP;
+
+public class OutputActivity extends AppCompatActivity {
+
+    private TextView nameTv, genderTv,birthDayTv, phoneTv,emailTv,houseTv,roadTv,postOfficeTv,postCodeTv,
+    districtTv,salaryTypeTv,startTimeTv,endTimeTv,totalSalaryTv,skillsTv;
+
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_output);
+        nameTv = findViewById(R.id.nameTv);
+        genderTv = findViewById(R.id.genderTv);
+        birthDayTv = findViewById(R.id.birthDayTv);
+        skillsTv = findViewById(R.id.skillsTv);
+        phoneTv = findViewById(R.id.phoneTv);
+        emailTv = findViewById(R.id.emailTv);
+        houseTv = findViewById(R.id.houseTv);
+        roadTv = findViewById(R.id.roadTv);
+        postOfficeTv = findViewById(R.id.postOfficeTv);
+        postCodeTv = findViewById(R.id.postCodeTv);
+        districtTv = findViewById(R.id.districtTv);
+        salaryTypeTv = findViewById(R.id.salaryTypeTv);
+        startTimeTv = findViewById(R.id.startTimeTv);
+        endTimeTv = findViewById(R.id.endTimeTv);
+        totalSalaryTv = findViewById(R.id.totalSalaryTv);
+        Intent getIntent = getIntent();
+        EmployeeFullDetails employeeFullDetails = (EmployeeFullDetails) getIntent.getSerializableExtra("emp_full_details");
+        try {
+            Calendar tempDate = Calendar.getInstance();
+            tempDate.setTimeInMillis(Long.parseLong(employeeFullDetails.getJobInfo().getAddress().getBasicInfo().getdOBInMilliSecond()));
+            String salaryType = getText(R.string.base_salary).toString();
+            double totalSalary = 0.0;
+            switch (employeeFullDetails.getJobInfo().getJobType())
+            {
+                case 1:
+                    salaryType = getText(R.string.base_salary).toString();
+                    CalcBaseSalary calcBaseSalary = new CalcBaseSalary(employeeFullDetails.getBaseSalary());
+                    totalSalary = calcBaseSalary.totalSalary();
+                    break;
+                case 2:
+                    CalcHourlySalary calcHourlySalary = new CalcHourlySalary(Double.parseDouble(employeeFullDetails.getTotalHour()),
+                            Double.parseDouble(employeeFullDetails.getHourlyRate()));
+                    salaryType = getText(R.string.hourly_salary).toString();
+                    totalSalary = calcHourlySalary.totalSalary();
+                    break;
+                case 3:
+                    salaryType = getText(R.string.commissioned_salary).toString();
+                    CalcCommissionedSalary calcCommissionedSalary = new CalcCommissionedSalary(employeeFullDetails.getBaseSalary(),
+                            Double.parseDouble(employeeFullDetails.getCommissionRate()),
+                            Double.parseDouble(employeeFullDetails.getGrossSale()));
+                    totalSalary = calcCommissionedSalary.totalSalary();
+                    break;
+                case 4:
+                    salaryType = getText(R.string.hourly_p_commissioned).toString();
+                    CalcHourlyCommissioned calcHourlyCommissioned = new CalcHourlyCommissioned(
+                            Double.parseDouble(employeeFullDetails.getTotalHour()),
+                    Double.parseDouble(employeeFullDetails.getHourlyRate()),
+                            Double.parseDouble(employeeFullDetails.getCommissionRate()),
+                            Double.parseDouble(employeeFullDetails.getGrossSale())
+                    );
+                    totalSalary = calcHourlyCommissioned.totalSalary();
+                    break;
+            }
+            nameTv.setText(employeeFullDetails.getJobInfo().getAddress().getBasicInfo().getName());
+            genderTv.setText(employeeFullDetails.getJobInfo().getAddress().getBasicInfo().getGender());
+            birthDayTv.setText(simpleDateFormat.format(tempDate.getTime()));
+            phoneTv.setText(employeeFullDetails.getJobInfo().getAddress().getBasicInfo().getPhone());
+            emailTv.setText(employeeFullDetails.getJobInfo().getAddress().getBasicInfo().getEmail());
+            houseTv.setText(employeeFullDetails.getJobInfo().getAddress().getHouse());
+            roadTv.setText(employeeFullDetails.getJobInfo().getAddress().getRoad());
+            postOfficeTv.setText(employeeFullDetails.getJobInfo().getAddress().getPostOffice());
+            postCodeTv.setText(employeeFullDetails.getJobInfo().getAddress().getPostCode());
+            districtTv.setText(employeeFullDetails.getJobInfo().getAddress().getDistrict());
+            salaryTypeTv.setText(salaryType);
+            startTimeTv.setText(getTimeCode(employeeFullDetails.getJobInfo().getStartTimeHour(),employeeFullDetails.getJobInfo().getStartTimeMinute()));
+            endTimeTv.setText(getTimeCode(employeeFullDetails.getJobInfo().getEndTimeHour(),employeeFullDetails.getJobInfo().getEndTimeMinute()));
+            totalSalaryTv.setText(String.valueOf(totalSalary));
+            List<String> skills = employeeFullDetails.getJobInfo().getAddress().getBasicInfo().getSkills();
+            String skillString = "No skills";
+            if(skills.size()>0)
+                skillString = TextUtils.join(", ", skills);
+
+            skillsTv.setText(skillString);
+
+        }catch (NullPointerException e){
+            Toast.makeText(this, "Something is wrong! Can not get Intent", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    public void back(View view) {
+        finish();
+    }
+
+    public void goHome(View view) {
+        Intent intent = new Intent(OutputActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    public String getTimeCode(String hours, String minute){
+        int newHour = Integer.parseInt(hours);
+
+        String amPm = "AM";
+        if(newHour>11) amPm = "PM";
+        int hour = newHour;
+        if(newHour>12) hour = newHour - 12;
+        if(newHour==0) hour = 12;
+        return EmployeeUtils.doubleIntVal(String.valueOf(hour)) + ":" + EmployeeUtils.doubleIntVal(minute) + " " + amPm;
+
+    }
+
+    public void callNumber(View view) {
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:" + phoneTv.getText().toString()));
+        if(callIntent.resolveActivity(getPackageManager())!= null){
+            startActivity(callIntent);
+        }else{
+            Toast.makeText(this, getText(R.string.no_component), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void sendSms(View view) {
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+        smsIntent.setData(Uri.parse("smsto:" + phoneTv.getText().toString()));
+        if(smsIntent.resolveActivity(getPackageManager())!= null){
+            startActivity(smsIntent);
+        }else{
+            Toast.makeText(this, getText(R.string.no_component), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void sendEmail(View view) {
+
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+        smsIntent.setData(Uri.parse("mailto:" + emailTv.getText().toString()));
+        if(smsIntent.resolveActivity(getPackageManager())!= null){
+            startActivity(smsIntent);
+        }else{
+            Toast.makeText(this, getText(R.string.no_component), Toast.LENGTH_SHORT).show();
+        }
+    }
+}

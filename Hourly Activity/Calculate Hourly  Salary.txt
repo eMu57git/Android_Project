@@ -1,0 +1,22 @@
+package com.example.abusmzakaria.employeeapp;
+public class CalcHourlySalary {
+
+    private double totalHour,hourRate;
+
+    public CalcHourlySalary(double totalHour, double hourRate) {
+        this.totalHour = totalHour;
+        this.hourRate = hourRate;
+    }
+
+    public double getTotalHour() {
+        return totalHour;
+    }
+
+    public double getHourRate() {
+        return hourRate;
+    }
+
+    public double totalSalary() {
+        return totalHour * hourRate;
+    }
+}
